@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div>
+        <fieldset>
+            <legend>Date Selector</legend>
+            <form action="#">
+                <label for="addr-show">The date you choose is:
+                    <input type="text" value="" id="addr-show">
+                </label>
+                <br />
+
+                <!--year selection-->
+                <select id="year">
+                    <option>=Year=</option>
+                </select>
+
+                <!--month selection-->
+                <select id="month">
+                    <option>=Month=</option>
+                </select>
+
+                <!--Date selection-->
+                <select id="day">
+                    <option>=Day=</option>
+                </select>
+                <button type="button" id="sureBtn">Confirm</button>
+            </form>
+        </fieldset>
+    </div>
+    <script src="js/calendar.js"></script>
+
+    <script>
+        var oYear = document.getElementById("year");
+        var sureBtn = document.getElementById("sureBtn");
+        var oMonth = document.getElementById("month");
+        var oDay = document.getElementById("day");
+        var oAdd = document.getElementById("addr-show");
+
+
+        var monthArr = [];
+
+        for (var i = 0; i < calendar.length; i++) {
+            var option = document.createElement('option');
+            option.innerHTML = calendar[i]['name'];
+            oYear.appendChild(option);
+        }
+
+
+        oYear.onchange = function () {
+            oMonth.innerHTML = '<option>=Month=</option>';
+            oDay.innerHTML = '<option>=Day=</option>';
+            if (this.value != this[0].value) {
+                var month = calendar[this.selectedIndex - 1]['month'];
+                monthArr = month;
+                for (var i = 0; i < month.length; i++) {
+                    var option = document.createElement('option');
+                    option.innerHTML = month[i]['name'];
+                    oMonth.appendChild(option);
+                }
+            }
+
+        }
+
+        oMonth.onchange = function () {
+            oDay.innerHTML = '<option>=Day=</option>';
+            if (this.value != this[0].value) {
+                var day = monthArr[this.selectedIndex - 1]['day'];
+                for (var i = 0; i < day.length; i++) {
+                    var option = document.createElement('option');
+                    option.innerHTML = day[i];
+                    oDay.appendChild(option);
+                }
+            }
+        }
+
+        sureBtn.onclick=function(){
+            oAdd.value=oYear.value+"-"+oMonth.value+"-"+oDay.value;
+        }
+
+    </script>
+
+</body>
+
+</html>
